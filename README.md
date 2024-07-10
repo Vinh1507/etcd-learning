@@ -92,6 +92,13 @@ Output:
 +------------------+---------+-------+-----------------------------+-----------------------------+
 ```
 
+Hoặc truy cập http://192.168.144.129:2380/members
+
+```
+[{"id":48995971173376025,"peerURLs":["http://192.168.144.129:2380"],"name":"etcd1","clientURLs":["http://192.168.144.129:2379"]},{"id":1888751438089749381,"peerURLs":["http://192.168.144.136:2380"],"name":"etcd3","clientURLs":["http://192.168.144.136:2379"]},{"id":5812507290315966283,"peerURLs":["http://192.168.144.133:2380"],"name":"etcd2","clientURLs":["http://192.168.144.133:2379"]}]
+1
+```
+
 ## Note
 Nếu bị lỗi `No help topic for ...`
 
@@ -121,3 +128,105 @@ Fix: `export ETCDCTL_API=3`
  ```
  etcdctl del mykey
  ```
+
+
+## Kết nối API Server với etcd (VD: Golang)
+
+### Connect
+
+```
+var Etcd_cli *clientv3.Client
+
+func ConnectToEtcd() {
+
+	var err error
+
+	Etcd_cli, err = clientv3.New(clientv3.Config{
+		Endpoints:   []string{"192.168.144.129:2379"},
+		DialTimeout: 5 * time.Second,
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+```
+
+### put, get (prefix):
+
+```
+package etcd
+
+import (
+	"context"
+	"go-api-server/initializers"
+	"log"
+	"time"
+
+	clientv3 "go.etcd.io/etcd/client/v3"
+)
+
+func PutEntry(key string, value string) error {
+	cli := initializers.Etcd_cli
+
+	if cli == nil {
+		log.Fatal("Etcd isn't connected!")
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+
+	_, err := cli.Put(ctx, key, value)
+	cancel()
+	return err
+}
+
+func GetEntryByKey(key string) (*clientv3.GetResponse, error) {
+	cli := initializers.Etcd_cli
+
+	if cli == nil {
+		log.Fatal("Etcd isn't connected!")
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+
+	resp, err := cli.Get(ctx, key)
+	cancel()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return resp, err
+}
+
+func GetEntryByPrefix(prefix string) (*clientv3.GetResponse, error) {
+	cli := initializers.Etcd_cli
+
+	if cli == nil {
+		log.Fatal("Etcd isn't connected!")
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+
+	resp, err := cli.Get(ctx, prefix, clientv3.WithPrefix())
+	cancel()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return resp, err
+}
+
+func DeleteEntry(key string) error {
+	cli := initializers.Etcd_cli
+
+	if cli == nil {
+		log.Fatal("Etcd isn't connected!")
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+
+	_, err := cli.Delete(ctx, key)
+	cancel()
+	if err != nil {
+		log.Fatal(err)
+	}
+	return err
+}
+
+```
