@@ -85,3 +85,33 @@ Output:
 | 50aa2c95a5a6c74b | started | etcd2 | http://192.168.144.133:2380 | http://192.168.144.133:2379 |
 +------------------+---------+-------+-----------------------------+-----------------------------+
 ```
+
+## Note
+Nếu bị lỗi `No help topic for ...`
+
+Fix: `export ETCDCTL_API=3`
+
+### Common command
+
+1. Put a pair
+
+ ```
+ etcdctl put mykey myvalue
+ ```
+
+2. Get a value by key
+ ```
+ etcdctl get mykey
+ ```
+
+3. Get entries by prefix
+
+ ```
+ etcdctl get "example" --prefix
+ ```
+
+4. Delete one key
+   
+ ```
+ etcdctl del mykey
+ ```
