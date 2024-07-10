@@ -27,9 +27,11 @@ Trong kubernetes, sử dụng cơ chế “watch" khi so sánh actual với conf
 
 ## Setup etcd cluster 3 node
 
-VM1: 192.168.144.129
-VM2: 192.168.144.133
-VM3: 192.168.144.136
+- VM1: 192.168.144.129
+- VM2: 192.168.144.133
+- VM3: 192.168.144.136
+
+Tại node 1
 
 ```
 ETCD_NAME=etcd1
@@ -44,6 +46,8 @@ ETCD_INITIAL_CLUSTER_TOKEN=etcd-cluster
 
 ```
 
+Tại node 2
+
 ```
 ETCD_NAME=etcd2
 ETCD_DATA_DIR=/var/lib/etcd
@@ -55,6 +59,8 @@ ETCD_INITIAL_CLUSTER=etcd1=http://192.168.144.129:2380,etcd2=http://192.168.144.
 ETCD_INITIAL_CLUSTER_STATE=new
 ETCD_INITIAL_CLUSTER_TOKEN=etcd-cluster
 ```
+
+Tại node 3
 
 ```
 ETCD_NAME=etcd3
