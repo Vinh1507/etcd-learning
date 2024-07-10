@@ -152,7 +152,7 @@ func ConnectToEtcd() {
 
 ```
 
-### put, get (prefix):
+### put, get (prefix), delete:
 
 ```
 package etcd
