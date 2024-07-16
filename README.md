@@ -1,7 +1,7 @@
 # etcd-learning
 
 References:
-[ETCD - IBM]
+[ETCD - IBM](https://facsiaginsa.com/etcd/how-to-setup-etcd-cluster)
 
 ## Tổng quan vể etcd
 Lưu trữ và duy trì hoạt động của các hệ thống phân tán
