@@ -6,6 +6,8 @@ References:
 
 [ETCD - facsiaginsa](https://facsiaginsa.com/etcd/how-to-setup-etcd-cluster)
 
+[etcd.io](https://etcd.io/docs/v3.5/tutorials/how-to-setup-cluster/)
+
 ## Tổng quan vể etcd
 Lưu trữ và duy trì hoạt động của các hệ thống phân tán
 Là một trong những thành phần cốt lõi của k8s (lưu state data, configuration data, metadata, …
