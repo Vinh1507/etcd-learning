@@ -107,6 +107,13 @@ Nếu bị lỗi `No help topic for ...`
 
 Fix: `export ETCDCTL_API=3`
 
+### Service:
+```
+systemctl enable etcd
+service etcd start
+service etcd status
+```
+
 ### Common command
 
 1. Put a pair
